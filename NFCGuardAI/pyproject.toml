@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nfcguardai"
+version = "1.0.0"
+description = "Reproducible NFC relay attack detection from measured waveforms with IQSecureNet"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.23,<3", "scipy>=1.9", "pandas>=1.5", "scikit-learn>=1.2",
+  "torch>=2.0", "soundfile>=0.12", "PyYAML>=6.0", "matplotlib>=3.6", "tqdm>=4.64"
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.4"]
+onnx = ["onnx>=1.14", "onnxruntime>=1.15"]
+
+[project.scripts]
+nfcguard = "nfcguard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,46 @@
+project: NFCGuardAI
+seed: 42
+dataset:
+  length: 1800
+  sample_rate: 10000000
+  store: data/processed
+  channels: auto             # auto, 1, 2. Never fabricate a missing quadrature component
+  strict_lengths: true
+  strict_labels: true
+  label_map: null             # YAML map of regex rules, when filenames cannot be inferred
+  cache_dtype: float16
+preprocessing:
+  mode: per_channel          # per_channel, joint_complex, global, none
+  epsilon: 1.0e-6
+  augment_wireless: true
+  augment_probability: 0.5
+model:
+  name: iqsecurenet
+  widths: [32, 64, 128, 256, 304, 384]
+  kernels: [7, 5, 5, 5, 3, 3]
+  strides: [1, 2, 2, 2, 1, 1]
+  dropout: 0.3
+  hidden: 128
+  pooling: gap
+  squeeze_excitation: false
+training:
+  batch_size: 64
+  epochs: 50
+  patience: 10
+  lr: 0.001
+  weight_decay: 0.0001
+  step_size: 10
+  gamma: 0.5
+  class_weighted: true
+  num_workers: 0
+  device: auto
+  stratified_batches: true
+  deterministic: true
+  amp: false
+calibration:
+  threshold: 0.5
+experiments:
+  cv_folds: 10
+  cv_seeds: [0,1,2,3,4,5,6,7,8,9]
+  ci: 0.95
+  figure_dpi: 600

@@ -1,0 +1,15 @@
+# REGULAR EXPRESSIONS evaluated against POSIX paths relative to the dataset root.
+# Rules are evaluated in order. Adapt them to the actual released archive.
+rules:
+  - pattern: '(?i)(normal|legitimate|direct|origin)'
+    subtype: legitimate
+    tag_from_path: true
+  - pattern: '(?i)(wireless|wi[-_ ]?fi|wifi)'
+    subtype: wireless
+    tag_id: null
+  - pattern: '(?i)(wired|wire[-_ ]?relay)'
+    subtype: wired
+    tag_from_path: true
+# Optional manual session metadata may be supplied via filename token e.g. session_01
+session_regex: '(?i)(?:session|phase|day)[_-]?(\d+)'
+tag_regex: '(?i)(?:tag|card|mifare)[_-]?(\d+)'
