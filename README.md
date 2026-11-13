@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1456677361.svg)](https://doi.org/10.5281/zenodo.24199741)
+
 # NFCGuardAI — IQSecureNet
 
 Reproducible physical-layer NFC relay attack detection from ATQA response waveforms.
