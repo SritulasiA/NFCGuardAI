@@ -120,7 +120,7 @@ nfcguard generalize --protocol session --out outputs/session_independent
 
 Configuration: configs/reproduction.yaml (fixed seed, deterministic torch settings, 50 max epochs, AdamW lr 0.001, weight decay 0.0001, batch size 64, StepLR gamma .5 every 10 epochs, checkpoint-loss early stopping patience 10, class-weighted BCE, training-only wireless augmentation). The trained model uses the training split only; V_ckpt chooses its epoch; V_cal fits temperature and analyzes threshold sensitivity; the test set is never used to tune the model, calibration or fixed threshold 0.50.
 
-Primary random splits are stratified by legitimate/wired/wireless subtype. 10-fold partitions are identical across models. Splits are persisted as indices for exact reuse (--splits can load a held-out split). A 10-fold corrected resampled t-test with Holm adjustment and a held-out McNemar comparison are available. The variance-correction result is shown both for the manuscript's 0.1/0.9 ratio and the effective training fraction 0.1/0.7.
+Primary random splits are stratified by legitimate/wired/wireless subtype. 10-fold partitions are identical across models. Splits are persisted as indices for exact reuse (--splits can load a held-out split). A 10-fold corrected resampled t-test with Holm adjustment and a held-out McNemar comparison are available.
 
 ### Comparison model transparency
 
