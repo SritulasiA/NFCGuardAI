@@ -1,4 +1,4 @@
-"""Leakage-safe waveform preprocessing and training-time RF perturbations."""
+
 from __future__ import annotations
 import numpy as np
 
