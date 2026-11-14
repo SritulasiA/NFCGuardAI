@@ -1,4 +1,3 @@
-
 Aligned segmentation of recordings is an assumption; NOT a universal ATQA event detector.
 For continuous recordings with unknown boundaries, supply pre-extracted traces.
 """
