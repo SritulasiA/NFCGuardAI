@@ -1,4 +1,4 @@
-"""Prepare a memory-mapped waveform store and metadata for reproducible experiments."""
+
 from __future__ import annotations
 import json
 import logging
