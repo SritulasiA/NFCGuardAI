@@ -1,3 +1,4 @@
+
 [![DOI](https://zenodo.org/badge/1456677361.svg)](https://doi.org/10.5281/zenodo.24199741)
 
 # NFCGuardAI — IQSecureNet
@@ -5,8 +6,6 @@
 Reproducible physical-layer NFC relay attack detection from ATQA response waveforms.
 
 This repository implements the architecture and experiment workflow described in Deep Learning-Based Real-Time Physical-Layer Relay Attack Detection in Near-Field Communication Using Raw I/Q Signal Analysis. It includes a six-block Conv1D IQSecureNet classifier, data loaders, leakage-aware partitions, checkpoint selection, post-hoc calibration, seven baselines, robustness tests, statistical tests, Grad-CAM, publication-quality plots, and offline/batch inference with model export.
-
-> Important scientific boundary: The ZIP contains source code, not the external NFC_Relay dataset, experimental measurements, or pretrained model weights. The provided synthetic smoke test verifies software function, not research claims. The original publication describes WAV recordings; WAV files may contain only mono amplitude samples rather than verified complex I/Q. When the actual archive contains only one channel, this software trains a clearly labeled mono-mode model; it does not invent a quadrature channel or claim exact reproduction of a two-channel model without measured I/Q. Claims of 94.6% accuracy, 95.1% F1, and 8.3 ms CPU time must be independently verified on the proper source data.
 
 ## 1. Requirements
 
@@ -56,8 +55,6 @@ nfcguard prepare --source data/NFC_Relay.zip --config configs/reproduction.yaml
 ```
 
 prepare safely extracts ZIP files, scans WAV/FLAC/NPY/NPZ/CSV/MAT recordings, verifies frame lengths, normalizes file layout to [N,1800,C], and produces data/processed/{signals.npy,metadata.csv,manifest.json}. WAV decoding uses soundfile and retains the source channel count. Long files whose sample count is divisible by 1800 are treated as pre-aligned consecutive frames. If the source is a continuous RF recording, external ATQA localization is required first: simply cutting arbitrary 1800-sample windows is not event detection.
-
-The manuscript and original publication disagree on dataset counts. The published NFC_Relay study reports 66,366 records, while the manuscript under implementation specifies 67,259. Neither count is assumed by the loader; actual verified records are logged in manifest.json and dataset class distributions are calculated from that manifest.
 
 ### Class mapping
 
@@ -146,7 +143,7 @@ nfcguard explain --checkpoint outputs/holdout/best.pt --sample-id 0 --out output
 nfcguard figures --out outputs/eda
 ```
 
-Ablations: per-channel / joint-complex / training-global / none, no augmentation, no class weighting, 4-/5-block architectures, mean/max pooling and optional squeeze-excitation. Robustness: AWGN (SNR dB), Rician flat fading (K), carrier frequency offset (Hz), I/Q imbalance (gain mismatch), and CW interference (interference-to-signal dB). Two-channel-specific perturbations fail rather than masquerade as valid mono experiments. Test perturbations are seeded and never used for model selection. Grad-CAM operates on the last Conv1D block, upsampled to 1,800 points. Fidelity plots show insertion and deletion by attribution order, with perturbation stability diagnostics.
+Ablations: per-channel / joint-complex / training-global / none, no augmentation, no class weighting, 4-/5-block architectures, mean/max pooling and optional squeeze-excitation. Robustness: AWGN (SNR dB), Rician flat fading (K), carrier frequency offset (Hz), I/Q imbalance (gain mismatch), and CW interference (interference-to-signal dB). Two-channel-specific perturbations fail rather than masquerade as valid mono experiments. Test perturbations are seeded and never used for model selection. 
 
 Figures are exported as 600 dpi PNGs, with axes/legends and no titles inside figures. All experimental figures are generated from actual predictions.
 
@@ -202,18 +199,6 @@ python -m nfcguard.cli --help
 
 The tests cover exact model count/MAC/receptive field, mono-handling, WAV and array shapes, label mapping, leak-free partitions, stratified sampling, preprocessing, calibration, paired statistical tests, saved checkpoints, TorchScript export, and functional model forward passes.
 
-## 9. Study validity notes
-
-- The public dataset may contain 1-channel WAV waveforms; do not label these as measured I/Q without verifying source acquisition.
-- The original publication mentions phases one week apart but does not necessarily release per-record session identifiers. Cross-session tests require real session metadata, not random pseudo-groups.
-- A wireless relay class may have no observed tag identity; LOTO reports only true held-out-tag legitimate/wired traces unless a verified wireless grouping can be supplied. This is not equivalent to every claim in the manuscript's later tables.
-- Per-trace channelwise Z-scoring erases absolute gain; augmenting with a uniform amplitude scale before it may have negligible effect.
-- Classical and deep baseline details that are not completely specified in the manuscript must be reported as adaptations in any resulting article.
-- Security software requires hardware/reader integration and threat-model validation before real-world use. The code is an experimental research pipeline, not a certified payment security module.
-
-## 10. Software license and attribution
-
-Source code: MIT (LICENSE). The external dataset remains the property of its original authors and is not included in the distribution. Please cite the original dataset paper above, as well as the NFCGuardAI manuscript when appropriate.
 
 ### Integration with an external live ATQA capture source
 
