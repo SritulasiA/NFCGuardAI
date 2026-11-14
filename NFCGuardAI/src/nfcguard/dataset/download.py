@@ -1,4 +1,5 @@
-"""Optional dataset download. Original archive is not redistributed by this repository."""
+
+
 from __future__ import annotations
 from pathlib import Path
 from urllib.request import Request, urlopen
